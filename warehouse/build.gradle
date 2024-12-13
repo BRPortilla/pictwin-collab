@@ -1,19 +1,58 @@
 plugins {
     id 'java'
+    id('io.ebean') version "15.8.0"
+    id('com.github.ben-manes.versions') version "0.51.0"
 }
 
 group = 'cl.ucn.disc.dsm.pictwin'
-version = '1.0-SNAPSHOT'
+version = '0.0.1'
 
 repositories {
     mavenCentral()
 }
 
 dependencies {
-    testImplementation platform('org.junit:junit-bom:5.10.0')
+    testImplementation platform('org.junit:junit-bom:5.11.3')
     testImplementation 'org.junit.jupiter:junit-jupiter'
+
+    implementation 'org.slf4j:slf4j-api:2.0.16'
+    runtimeOnly 'ch.qos.logback:logback-classic:1.5.12'
+
+    compileOnly 'org.projectlombok:lombok:1.18.34'
+    annotationProcessor 'org.projectlombok:lombok:1.18.34'
+
+    implementation 'io.ebean:ebean:15.8.0'
+    implementation 'io.ebean:ebean-ddl-generator:15.8.0'
+    annotationProcessor 'io.ebean:querybean-generator:15.8.0'
+
+    implementation 'org.xerial:sqlite-jdbc:3.47.0.0'
+
+    implementation 'com.github.f4b6a3:ulid-creator:5.2.3'
+
+    implementation 'org.apache.commons:commons-lang3:3.17.0'
+
+    implementation 'com.password4j:password4j:1.8.2'
+
+    //gson
+    //implementation 'com.google.code.gson:gson:2.11.0'
+    implementation 'com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.15.2'
+
+    implementation 'io.javalin:javalin:6.3.0'
+
 }
 
 test {
     useJUnitPlatform()
+}
+
+tasks.named('wrapper') {
+    gradleVersion = '8.10.2'
+    distributionType = Wrapper.DistributionType.ALL;
+}
+
+tasks.register('runServer', JavaExec) {
+    group = "Execution"
+    description = "Run the server"
+    classpath = sourceSets.main.runtimeClasspath
+    getMainClass().set("cl.ucn.disc.dsm.pictwin.TheServer")
 }
