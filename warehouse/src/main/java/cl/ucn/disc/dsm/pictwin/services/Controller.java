@@ -5,6 +5,7 @@ import cl.ucn.disc.dsm.pictwin.model.Pic;
 import cl.ucn.disc.dsm.pictwin.model.PicTwin;
 import cl.ucn.disc.dsm.pictwin.model.query.QPersona;
 import cl.ucn.disc.dsm.pictwin.model.query.QPic;
+import cl.ucn.disc.dsm.pictwin.model.query.QPicTwin;
 import cl.ucn.disc.dsm.pictwin.utils.FileUtils;
 
 import com.password4j.Password;
@@ -17,6 +18,7 @@ import lombok.extern.slf4j.Slf4j;
 
 import java.io.File;
 import java.time.Instant;
+import java.util.List;
 
 
 /** The Controller. */
@@ -168,5 +170,10 @@ public class Controller {
         this.database.save(picTwin);
 
         return picTwin;
+    }
+
+    /** Get the PicTwins. */
+    public List<PicTwin> getPicTwins(@NonNull String ulidPersona) {
+        return new QPicTwin().persona.ulid.equalTo(ulidPersona).findList();
     }
 }
