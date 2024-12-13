@@ -1,6 +1,7 @@
 package cl.ucn.disc.dsm.pictwin.services;
 
 import cl.ucn.disc.dsm.pictwin.model.Persona;
+import cl.ucn.disc.dsm.pictwin.model.query.QPersona;
 
 import com.password4j.Password;
 
@@ -21,6 +22,29 @@ public class Controller {
     /** The Constructor. */
     public Controller(@NonNull final Database database) {
         this.database = database;
+    }
+
+    /** The seed of the database. */
+    public Boolean seed() {
+
+        // find the Persona size
+        int personaSize = new QPersona().findCount();
+        log.debug("Personas in database: {}", personaSize);
+
+        // if the Persona exist -> don't seed!
+        if (personaSize != 0){
+            return Boolean.FALSE;
+        }
+
+        log.debug("Can't find data, seeding the database ..");
+
+        // seed the Persona
+        Persona persona = this.register("durrutia.ucn.cl", "durrutia123");
+        log.debug("Persona registered: {}", persona);
+
+        log.debug("Database seeded.");
+
+        return Boolean.TRUE;
     }
 
     /** Register a new user. */
