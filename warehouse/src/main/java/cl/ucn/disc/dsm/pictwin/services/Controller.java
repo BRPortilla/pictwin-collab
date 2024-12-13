@@ -70,4 +70,21 @@ public class Controller {
 
         return persona;
     }
+
+    /** Login a user. */
+    public Persona login(@NonNull final String email, @NonNull final String password) {
+
+        // find the Persona
+        Persona persona = new QPersona().email.equalTo(email).findOne();
+        if (persona == null) {
+            throw new RuntimeException("User not found");
+        }
+
+        // check the password
+        if (!Password.check(password, persona.getPassword()).withBcrypt()) {
+            throw new RuntimeException("Wrong password");
+        }
+
+        return persona;
+    }
 }
