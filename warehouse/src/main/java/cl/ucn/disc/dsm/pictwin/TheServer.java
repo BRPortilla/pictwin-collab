@@ -62,4 +62,60 @@ public class TheServer {
                 throw new IllegalArgumentException("Method not supported:" + route.getMethod());
         }
     }
+
+    public static void main(String[] args){
+
+        log.debug("Configuring controller...");
+        Controller controller = new Controller(DB.getDefault());
+
+        if(controller.seed()) {
+            log.debug("Database seeded.");
+        }
+
+        log.debug("Configure TheServer...");
+
+        Javalin javalin = createJavalin();
+
+        log.debug("Adding routes...");
+
+        //GET -> /
+        addRoute(new Home(), javalin);
+
+        //GET -> /api/personas/{ulid}/pic
+        addRoute(new PersonaPicTwins(controller), javalin);
+
+        //TODO: IMPLEMENTAR LAS RUTAS.
+
+        //POST -> /api/personas
+        addRoute(new PersonaLogin(controller), javalin);
+
+        //POST -> /api/personas/{ulid}/pic
+        addRoute(new PersonaPic(controller), javalin);
+
+        //shutdown latch
+        CountDownLatch latch = new CountDownLatch(1);
+
+        Runtime.getRuntime()
+                .addShutdownHook(
+                        new Thread(
+                                () -> {
+                                    javalin.stop();
+
+                                    DB.getDefault().shutdown();
+
+                                    latch.countDown();
+                                }));
+
+        log.debug("Starting the server...");
+        javalin.start(7000);
+
+        try {
+            latch.await();
+        } catch (InterruptedException e){
+            log.debug("Server shutdown interrupted", e);
+            Thread.currentThread().interrupt();
+        }
+
+        log.debug("Done.");
+    }
 }
