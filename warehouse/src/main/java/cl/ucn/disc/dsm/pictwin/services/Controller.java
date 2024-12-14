@@ -51,6 +51,10 @@ public class Controller {
         Persona persona = this.register("durrutia.ucn.cl", "durrutia123");
         log.debug("Persona registered: {}", persona);
 
+        Persona persona2 = this.register("benjamin.rivera01@alumnos.ucn.cl", "brivera123");
+        log.debug("Persona registered: {}", persona2);
+
+
         log.debug("Database seeded.");
 
         return Boolean.TRUE;
