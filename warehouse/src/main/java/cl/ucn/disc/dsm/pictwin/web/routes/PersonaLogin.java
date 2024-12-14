@@ -16,9 +16,13 @@ public class PersonaLogin extends Route {
     public PersonaLogin(Controller controller){
         super(Method.POST, "/api/personas");
 
-        //this.handler = buildHandler(controller);
+        this.handler = buildHandler(controller);
     }
 
-
+    private Handler buildHandler(Controller controller) {
+        return ctx -> {
+            
+        };
+    }
 
 }
