@@ -21,7 +21,22 @@ public class PersonaLogin extends Route {
 
     private Handler buildHandler(Controller controller) {
         return ctx -> {
-            
+            String password = ctx.formParam("password");
+            String email = ctx.formParam("email");
+
+            log.debug("Email detectado={} y contrasenia={} para Persona.",email,password);
+
+            //No se encuentra contrasenia o email.
+            if (StringUtils.isEmpty(password) || StringUtils.isEmpty(email)) {
+                ctx.status(HttpStatus.UNPROCESSABLE_CONTENT);
+                return;
+            }
+
+            email = email.trim();
+            password = password.trim();
+
+            ctx.json(controller.login(email,password));
+            //ctx.status(200);
         };
     }
 
