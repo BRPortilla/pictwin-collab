@@ -29,11 +29,13 @@ public class TheMain {
             log.debug("Seeded the database.");
         }
 
+        //FIXME: when trying to logging-in with this account, it says it doesn't exist.
         log.debug("Registering Persona ..");
         Persona p = c.register("bairon.rojas@alumnos.ucn.cl","brojas123");
         log.debug("Persona: {}", p);
 
-        File file = FileUtils.getResourceFile("antofagasta.jpg");
+        //File is obtainable from the resources folder. There is the image with the name "default.jpg".
+        File file = FileUtils.getResourceFile("default.jpg");
         log.debug("File: {}", file);
 
         PicTwin pt = c.addPic(p.getUlid(), -23.6509, -70.9975, file);
