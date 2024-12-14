@@ -16,7 +16,9 @@ import cl.ucn.disc.dsm.pictwin.ui.theme.PicTwinTheme
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
+
+        //enableEdgeToEdge()
+
         setContent {
             PicTwinTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
