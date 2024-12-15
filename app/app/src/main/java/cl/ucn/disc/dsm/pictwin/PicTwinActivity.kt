@@ -1,3 +1,7 @@
+
+
+
+
 package cl.ucn.disc.dsm.pictwin
 
 import android.os.Bundle;
@@ -36,8 +40,45 @@ import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
-import cl.ucn.disc.dsm.pictwin.PicTwinTheme
+import cl.ucn.disc.dsm.pictwin.ui.theme.PicTwinTheme
+
+/**
+ * Activity: PicTwin
+ */
+class PicTwinActivity : ComponentActivity() {
+
+    /**
+     * onCreate: build the UI
+     */
+    override fun onCreate(savedInstanceState: Bundle?) {
+
+        // call the super!
+        super.onCreate(savedInstanceState)
+
+        //setContent: build the UI!
+        setContent {
+            PicTwinTheme {
+                PicTwinScaffold()
+            }
+        }
+    }
+
+}
+
+/**
+ * PicTwinScaffold.
+ */
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun PicTwinScaffold() {
+
+    // the scroll behavior
+    val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior(
+        snapAnimationSpec = spring(stiffness = Spring.StiffnessMediumLow)
+    )
+
+    // the scaffold
 
 
-class PicTwinActivity {
+
 }
