@@ -1,7 +1,3 @@
-
-
-
-
 package cl.ucn.disc.dsm.pictwin
 
 import android.os.Bundle;
