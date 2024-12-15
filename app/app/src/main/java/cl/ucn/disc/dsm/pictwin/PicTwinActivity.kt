@@ -78,7 +78,33 @@ fun PicTwinScaffold() {
     )
 
     // the scaffold
-
-
-
+    Scaffold (
+        modifier = Modifier
+            .fillMaxSize()
+            .nestedScroll(scrollBehavior.nestedScrollConnection),
+        topBar = {
+            PicTwinTopBar(
+                scrollBehavior = scrollBehavior
+            )
+        },
+        floatingActionButton = {
+            FabActionButton()
+        }
+    ) { innerPadding ->
+        PicTwinList(
+            innerPadding = innerPadding,
+        )
+    }
 }
+
+/**
+ * The PicTwin pair.
+ */
+data class PicturePair(
+    val leftImage: Painter,
+    val rightImage: Painter
+)
+
+/**
+ * The List of PicTwins.
+ */
