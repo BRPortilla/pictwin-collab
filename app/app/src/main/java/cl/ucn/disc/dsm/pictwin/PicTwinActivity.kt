@@ -139,8 +139,49 @@ data class PicturePair(
 @Composable
 fun PicTwinList(
     innerPaddingValues: PaddingValues,
+    vm: PicTwinListModel = hiltViewModel()
 ) {
 
+    val state = vm.state.collectAsState().value
+
+    // Pull to refresh.
+    PullToRefreshBox(
+        isRefreshing = state is PicTwinListModel.State.Loading,
+        onRefresh = { vm.refresh() },
+        indicator = {
+            // Empty Box with zero size to hide the indicator
+            Box(modifier = Modifier.size(0.dp)) {}
+        }
+    ) {
+        // Render the state
+        when (state) {
+
+            //initial or loading
+            is PicTwinListModel.State.Initial, PicTwinListModel.State.Loading -> {
+                LoadingBox()
+            }
+
+            // error
+
+            is PicTwinListModel.State.Error -> {
+                ErrorBox(
+                    error = state,
+                    onAction = { vm.refresh() }
+                )
+            }
+
+            // success
+            is PicTwinListModel.State.Success -> {
+                PicTwinBox(
+                    innerPadding = innerPadding,
+                    pictwins = state.persona.picTwins,
+                )
+            }
+        }
+
+    }
+
+    /**
     //TODO: retrieve this list from the server
     val pictures = listOf(
         PicturePair(
@@ -168,6 +209,7 @@ fun PicTwinList(
             PicTwinRow(twin = picturePair)
         }
     }
+    */
 }
 
 
