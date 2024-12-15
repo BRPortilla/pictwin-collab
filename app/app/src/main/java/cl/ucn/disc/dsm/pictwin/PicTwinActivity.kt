@@ -108,3 +108,42 @@ data class PicturePair(
 /**
  * The List of PicTwins.
  */
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun PicTwinList(
+    innerPaddingValues: PaddingValues,
+) {
+
+    //TODO: retrieve this list from the server
+    val pictures = listOf(
+        PicturePair(
+            leftImage = painterResource(id = R.drawable.image_ucn),
+            rightImage = painterResource(id = R.drawable.image_portada),
+        ),
+        PicturePair(
+            leftImage = painterResource(id = R.drawable.image_ucn),
+            rightImage = painterResource(id = R.drawable.image_portada),
+        ),
+    )
+
+    // Values list.
+    LazyColumn (
+        contentPadding = PaddingValues(
+            start = 16.dp,
+            end = 16.dp,
+            top = innerPadding.calculateTopPadding(),
+            bottom = 8.dp
+        ),
+        verticalArrangement = Arrangement.spacedBy(8.dp),
+
+    ) {
+        items(pictures) { picturePair ->
+            PicTwinRow(twin = picturePair)
+        }
+    }
+}
+
+
+/**
+ * PicTwinRow.
+ */
