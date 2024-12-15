@@ -177,3 +177,25 @@ fun PicTwinRow(twin: PicturePair) {
     }
 }
 
+/**
+ * PicTwinTopBar.
+ */
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun PicTwinTopBar(
+    scrollBehavior: TopAppBarScrollBehavior,
+) {
+    TopAppBar(
+        title = { Text(text = "PicTwin Application") },
+        navigationIcon = {
+            IconButton(onClick = { }) {
+                Icon(
+                    imageVector = Icons.Default.Home,
+                    contentDescription = "Home"
+                )
+            }
+        },
+        scrollBehavior = scrollBehavior,
+        colors = TopAppBarDefaults.topAppBarColors()
+    )
+}
