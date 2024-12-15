@@ -147,3 +147,33 @@ fun PicTwinList(
 /**
  * PicTwinRow.
  */
+@Composable
+fun PicTwinRow(twin: PicturePair) {
+    Row (
+        modifier = Modifier.fillMaxWidth(),
+        horizontalArrangement = Arrangement.spacedBy(8.dp),
+    ) {
+        Image(
+            painter = twin.leftImage,
+            //FIXME: it does not have to be null the description.
+            contentDescription = null,
+            modifier = Modifier
+                .weight(1f)
+                .aspectRatio(1f)
+                .clip(RoundedCornerShape(8.dp)),
+            contentScale = ContentScale.Crop
+        )
+
+        Image(
+            painter = twin.rightImage,
+            //FIXME: it does not have to be null the description.
+            contentDescription = null,
+            modifier = Modifier
+                .weight(1f)
+                .aspectRatio(1f)
+                .clip(RoundedCornerShape(8.dp)),
+            contentScale = ContentScale.Crop
+        )
+    }
+}
+
