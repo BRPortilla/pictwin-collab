@@ -39,6 +39,7 @@ import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import cl.ucn.disc.dsm.pictwin.ui.theme.PicTwinTheme
 
@@ -198,4 +199,34 @@ fun PicTwinTopBar(
         scrollBehavior = scrollBehavior,
         colors = TopAppBarDefaults.topAppBarColors()
     )
+}
+
+/**
+ * FabActionButton.
+ */
+@Composable
+fun FabActionButton(
+    onAction: () -> Unit = { },
+) {
+    FloatingActionButton(
+        onClick = {
+        },
+        containerColor = MaterialTheme.colorScheme.tertiary,
+    ) {
+        Icon(Icons.Default.Add, contentDescription = "Add")
+    }
+}
+
+
+
+
+/**
+ * Preview.
+ */
+@Preview(showBackground = true, showSystemUi = true)
+@Composable
+fun PicTwinScaffoldPreview() {
+    PicTwinTheme {
+        PicTwinScaffold()
+    }
 }
