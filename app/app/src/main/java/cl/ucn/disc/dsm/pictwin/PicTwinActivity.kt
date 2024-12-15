@@ -140,14 +140,14 @@ data class PicturePair(
 @Composable
 fun PicTwinList(
     innerPaddingValues: PaddingValues,
-    vm: PicTwinListModel = hiltViewModel()
+    vm: PicTwinListViewModel = hiltViewModel()
 ) {
 
     val state = vm.state.collectAsState().value
 
     // Pull to refresh.
     PullToRefreshBox(
-        isRefreshing = state is PicTwinListModel.State.Loading,
+        isRefreshing = state is PicTwinListViewModel.State.Loading,
         onRefresh = { vm.refresh() },
         indicator = {
             // Empty Box with zero size to hide the indicator
@@ -158,13 +158,13 @@ fun PicTwinList(
         when (state) {
 
             //initial or loading
-            is PicTwinListModel.State.Initial, PicTwinListModel.State.Loading -> {
+            is PicTwinListViewModel.State.Initial, PicTwinListViewModel.State.Loading -> {
                 LoadingBox()
             }
 
             // error
 
-            is PicTwinListModel.State.Error -> {
+            is PicTwinListViewModel.State.Error -> {
                 ErrorBox(
                     error = state,
                     onAction = { vm.refresh() }
@@ -172,7 +172,7 @@ fun PicTwinList(
             }
 
             // success
-            is PicTwinListModel.State.Success -> {
+            is PicTwinListViewModel.State.Success -> {
                 PicTwinBox(
                     innerPadding = innerPadding,
                     pictwins = state.persona.picTwins,
@@ -251,6 +251,29 @@ fun PicTwinBox(
     }
 }
 
+/**
+ * Create a Painter from the image in base64.
+ */
+@Composable
+fun loadImagePainter(imageBase64: String): Painter {
+    // Decode the Base64 string to a ByteArray
+    val imageByteArray = try {
+        Base64.decode(imageBase64, Base64.DEFAULT)
+    } catch (e:IllegalArgumentException) {
+        // Handle invalid Base64 string.
+        null
+    }
+
+    //Convert ByteArray to Bitmap
+    val bitmap = imageByteArray?.let { byteArray ->
+        BitmapFactory.decodeByteArray(byteArray, 0, byteArray.size)
+    }
+
+    // Create a Painter from the Bitmap
+    return bitmap?.let {
+        BitmapPainter(image = bitmap.asImageBitmap())
+    } ?: painterResource(id = R.drawable.image_portada)
+}
 
 
 /**
@@ -329,7 +352,7 @@ fun FabActionButton(
  * The ViewModel.
  */
 @HiltViewModel
-class PicTwinListModel @Inject constructor(
+class PicTwinListViewModel @Inject constructor(
     private val service: Service,
 ) : ViewModel() {
 
