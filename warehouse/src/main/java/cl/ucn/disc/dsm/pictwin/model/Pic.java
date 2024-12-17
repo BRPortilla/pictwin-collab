@@ -1,5 +1,6 @@
 package cl.ucn.disc.dsm.pictwin.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import io.ebean.annotation.NotNull;
 
 import jakarta.persistence.Entity;
@@ -43,6 +44,7 @@ public class Pic extends BaseModel {
     @Builder.Default @NotNull private Integer views = 0;
 
     /** The Persona relationship. */
+    @JsonBackReference
     @ManyToOne(optional = false)
     private Persona persona;
 
