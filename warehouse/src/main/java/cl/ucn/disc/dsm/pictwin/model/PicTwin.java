@@ -1,5 +1,6 @@
 package cl.ucn.disc.dsm.pictwin.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import io.ebean.annotation.NotNull;
 
 import jakarta.persistence.Entity;
@@ -30,6 +31,7 @@ public class PicTwin {
     @Builder.Default @NotNull private Boolean reported = Boolean.FALSE;
 
     /** The Persona relationship. */
+    @JsonBackReference
     @ManyToOne(optional = false)
     private Persona persona;
 

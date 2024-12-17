@@ -1,5 +1,6 @@
 package cl.ucn.disc.dsm.pictwin.model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import io.ebean.annotation.Index;
 import io.ebean.annotation.NotNull;
 
@@ -49,6 +50,7 @@ public class Persona extends BaseModel {
     private List<Pic> pics;
 
     /** The list of PicTwins. */
+    @JsonManagedReference
     @ToString.Exclude
     @OneToMany(mappedBy = "persona", cascade = CascadeType.ALL)
     private List<PicTwin> picTwins;
